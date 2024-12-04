@@ -1,12 +1,22 @@
-const apiurl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
-const img = document.querySelector(".img")
+let imgBox = document.getElementById('imgBox');
+let qrImage = document.getElementById('qrImage');
+let button = document.getElementById('btn');
 
-document.querySelector(".button").addEventListener("click",()=>{
-  generate(document.querySelector(".input").value);
+button.addEventListener("click",()=>{
+  let qrText = document.getElementById('qrText');
+  imgBox.classList.add("showImg");
+  qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
+  button.innerHTML = "Reload";
+  button.addEventListener("click",()=>{
+    location.reload();
+  })
 })
 
-async function generate(val){
-  img.src = apiurl+val;
-}
+let qrText = document.getElementById('qrText');
 
-generate();
+qrText.addEventListener("keypress",function(event){
+  if(event.key === "k"){
+    event.preventDefault();
+    button.click();
+  }
+})
